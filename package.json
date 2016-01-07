@@ -1,0 +1,25 @@
+{
+  "name": "sacdl-project",
+  "version": "0.0.1",
+  "description": "加密货币开发语言统计分析, Statistical Analysis of Cryptocurrency Development Languages",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/imfly/sacdl-project.git"
+  },
+  "keywords": [
+    "Cryptocurrency",
+    "bitcoin",
+    "d3js",
+    "nodejs"
+  ],
+  "author": "imfly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imfly/sacdl-project/issues"
+  },
+  "homepage": "https://github.com/imfly/sacdl-project#readme"
+}
