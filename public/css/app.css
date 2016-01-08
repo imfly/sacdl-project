@@ -1,47 +1,13 @@
-body {
-    background: url(texture-noise.png);
-    overflow: hidden;
-    margin: 0;
-    font-size: 14px;
-    font-family: "Helvetica Neue", Helvetica;
-}
-
-#chart,
-#header,
-#footer {
+#chart {
     position: absolute;
     top: 0;
 }
 
-#header,
-#footer {
-    z-index: 1;
-    display: block;
-    font-size: 36px;
-    font-weight: 300;
-    text-shadow: 0 1px 0 #fff;
-}
-
-#header.inverted,
-#footer.inverted {
-    color: #fff;
-    text-shadow: 0 1px 4px #000;
-}
-
-#header {
-    top: 80px;
-    left: 140px;
-    width: 1000px;
-}
-
-#footer {
-    top: 680px;
-    right: 140px;
-    text-align: right;
+#barId {
+    border: 1px solid #DEDEDE
 }
 
 rect {
-    fill: none;
     pointer-events: all;
 }
 
@@ -87,10 +53,55 @@ a:hover {
     color: #666;
 }
 
-.hint {
-    position: absolute;
-    right: 0;
-    width: 1280px;
+
+/*bar*/
+
+.chart .legend {
+    fill: black;
+    font: 14px sans-serif;
+    text-anchor: start;
     font-size: 12px;
-    color: #999;
+}
+
+.chart text {
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
+
+.chart .label {
+    fill: black;
+    font: 14px sans-serif;
+    text-anchor: end;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+
+/*footer*/
+
+.main-footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-top: 100px;
+    color: #99979c;
+    text-align: center;
+    background-color: #2a2730;
+}
+
+.main-footer p {
+    margin-bottom: 0;
+}
+
+.main-footer a {
+    color: #fff;
 }
