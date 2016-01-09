@@ -1,5 +1,5 @@
 (function() {
-    var url = "https://api.github.com/search/repositories?q=wallet&sort=stars&order=desc";
+    var url = "https://api.github.com/search/repositories?q=bitcoin&sort=stars&order=desc";
 
     /**
      * start treemap
