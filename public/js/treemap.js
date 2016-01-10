@@ -47,6 +47,7 @@ var Treemap = (function() {
     }
 
     function showChart(data) {
+        node = root = [];
         node = root = Utils.getTreeData(data);
 
         var nodes = treemap.nodes(root)

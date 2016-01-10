@@ -1,8 +1,13 @@
 var Utils = (function() {
-
-    var data;
+    var dataSet,
+        items = [];
 
     return {
+
+        init: function(data) {
+            dataSet = data;
+        },
+
         /**
          Data format:
         {
@@ -16,8 +21,8 @@ var Utils = (function() {
             }]
         }
         */
-        getBarData: function(dataSet) {
-            var treeData = this.getTreeData(dataSet); //or dataSet
+        getBarData: function() {
+            var treeData = this.getTreeData(); //or dataSet
             var items = treeData.children;
             var result = {
                     labels: [],
@@ -52,7 +57,7 @@ var Utils = (function() {
             }
            */
 
-        getTreeData: function(dataSet) {
+        getTreeData: function() {
             var languages = {};
 
             mergeTo(dataSet, {
@@ -61,7 +66,7 @@ var Utils = (function() {
             });
 
             if (dataSet && dataSet.items) {
-                var items = dataSet.items;
+                items = dataSet.items;
 
                 items.forEach(function(item, index) {
                     if (typeof languages[item.language] === "undefined") {

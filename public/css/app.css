@@ -105,3 +105,20 @@ a:hover {
 .main-footer a {
     color: #fff;
 }
+
+#modal {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 200px;
+    height: 64px;
+    padding: 20px 15px 0px;
+    border: 3px solid #ababab;
+    box-shadow: 1px 1px 10px #ababab;
+    border-radius: 20px;
+    background-color: white;
+    z-index: 1000;
+    text-align: center;
+    overflow: auto;
+}

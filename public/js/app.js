@@ -1,8 +1,13 @@
 (function() {
-    var url = "https://api.github.com/search/repositories?q=bitcoin&sort=stars&order=desc";
+    var loading = document.getElementById("modal");
 
     /**
-     * start treemap
+     * Search
+     */
+    Searcher.init();
+
+    /**
+     * start BarChart
      */
     Bar.settings = {
         title: "Top100 BarChart",
@@ -21,8 +26,30 @@
     }
     Treemap.init();
 
-    d3.json(url, function(data) {        
-        Treemap.show(data);
-        Bar.show(data);        
-    });
+    function show(url) {
+        var loader = setTimeout(function() {
+            loading.style.display = "block";
+        }, 300);
+
+        d3.json(url, function(err, data) {
+            if (err) {
+                clearTimeout(loader);
+                loading.style.display = "none";
+                alert("加载数据失败，请检查您的网络设置。")
+            };
+            Utils.init(data);
+
+            Bar.show();
+            Treemap.show();
+
+            clearTimeout(loader);
+            loading.style.display = "none";
+        });
+    }
+
+    // Searcher.addListener(function(url) {
+    //     show(url);
+    // })
+
+    show('https://api.github.com/search/repositories?q=bitcoin');
 })()

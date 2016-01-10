@@ -5,7 +5,10 @@ var Bar = (function() {
         gapBetweenGroups = 10,
         spaceForLabels = 150,
         spaceForLegend = 150,
-        barId;
+        barId,
+        svg,
+        data,
+        yAxis;
 
     // Zip the series data together (first values, second values, etc.)
     var zippedData = [];
@@ -22,10 +25,14 @@ var Bar = (function() {
 
             d3.select("#barTitle").text(this.settings.title);
             d3.select("#barDesc").text(this.settings.desc);
+
+            // Specify the chart area and dimensions
+            chart = d3.select(barId).append("svg:svg")
+                .attr("class", "chart")
         },
 
-        show: function(data) {
-            showBar(data);
+        show: function() {
+            showBar();
         }
     }
 
@@ -37,9 +44,13 @@ var Bar = (function() {
         }
     }
 
-    function showBar(dataSet) {
-        var data = Utils.getBarData(dataSet);
+    function showBar() {
+        //clean data;
+        zippedData = [];
+
+        data = Utils.getBarData();
         groupHeight = barHeight * data.series.length;
+
         zippingData(data);
 
         // Color scale
@@ -53,25 +64,24 @@ var Bar = (function() {
         var y = d3.scale.linear()
             .range([chartHeight + gapBetweenGroups, 0]);
 
-        var yAxis = d3.svg.axis()
+        yAxis = d3.svg.axis()
             .scale(y)
             .tickFormat('')
             .tickSize(0)
             .orient("left");
 
-        // Specify the chart area and dimensions
-        // var chart = d3.select(".chart")
-        //     .attr("width", spaceForLabels + chartWidth + spaceForLegend)
-        //     .attr("height", chartHeight);
-        var chart = d3.select(barId).append("svg:svg")
-            .attr("class", "chart")
+        var svg = chart
             .attr("width", spaceForLabels + chartWidth + spaceForLegend)
             .attr("height", chartHeight);
 
-        // Create bars
-        var bar = chart.selectAll("g")
+        // Get the nodes
+        var barNodes = svg.selectAll("g")
             .data(zippedData)
-            .enter().append("g")
+
+        // Create bars
+        var bar = barNodes
+            .enter()
+            .append("g")
             .attr("transform", function(d, i) {
                 return "translate(" + spaceForLabels + "," + (i * barHeight + gapBetweenGroups * (0.5 + Math.floor(i / data.series.length))) + ")";
             });
@@ -112,7 +122,15 @@ var Bar = (function() {
                     return ""
             });
 
-        chart.append("g")
+        // Delete the extra nodes
+        barNodes.exit()
+            .transition()
+            .style({
+                opacity: 0
+            })
+            .remove();
+
+        svg.append("g")
             .attr("class", "y axis")
             .attr("transform", "translate(" + spaceForLabels + ", " + -gapBetweenGroups / 2 + ")")
             .call(yAxis);
@@ -121,8 +139,10 @@ var Bar = (function() {
         var legendRectSize = 18,
             legendSpacing = 4;
 
-        var legend = chart.selectAll('.legend')
-            .data(data.series)
+        var legendData = svg.selectAll('.legend')
+            .data(data.series);
+
+        var legend = legendData
             .enter()
             .append('g')
             .attr('transform', function(d, i) {
@@ -150,5 +170,7 @@ var Bar = (function() {
             .text(function(d) {
                 return d.label;
             });
+
+        legendData.exit().remove();
     }
 }())
