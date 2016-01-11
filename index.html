@@ -34,10 +34,14 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="input-group  input-group-lg">
-                    <input id="search-input" type="text" class="form-control" placeholder="Search for...">
+                    <input id="search-input" type="text" class="form-control" placeholder="输入关键字，比如: bitcoin ...">
                     <span class="input-group-btn">
-                    <button id="search-btn" class="btn btn-default" type="button">Go!</button>
+                    <button id="search-btn" class="btn btn-default" type="button">搜索!</button>
                     </span>
+                </div>
+                <br>
+                <div id="search-msg" class="alert alert-success" role="alert">
+                    当前搜索地址: https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc&per_page=100
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -48,6 +52,7 @@
             <div class="col-md-10">
                 <h2 id="barTitle">Top100 Bar Chart</h2>
                 <div id="barDesc"></div>
+                <br/>
                 <div id="barId"></div>
                 <br/>
                 <h2 id="treemapTitle"></h2>
@@ -58,12 +63,13 @@
                         <option value="forks">Forks</option>
                     </select>
                 </div>
+                <br/>
                 <div id="sacdlTreemap"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
         <div id="modal" class="overlay">
-            loading...
+            加载中...
         </div>
     </div>
     <footer class="main-footer" role="contentinfo">
