@@ -45,6 +45,10 @@ var Bar = (function() {
     }
 
     function showBar() {
+        chart.remove();
+        chart = d3.select(barId).append("svg:svg")
+            .attr("class", "chart");
+
         //clean data;
         zippedData = [];
 

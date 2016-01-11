@@ -4,8 +4,9 @@ var Treemap = (function() {
         x = d3.scale.linear().range([0, w]),
         y = d3.scale.linear().range([0, h]),
         color = d3.scale.category20c(),
-        root,
-        node,
+        root = [],
+        node = [],
+        chart,
         treemap,
         svg;
 
@@ -22,22 +23,16 @@ var Treemap = (function() {
             d3.select("#treemapTitle").text(this.settings.title);
             d3.select("#treemapDesc").text(this.settings.desc);
 
-            treemap = d3.layout.treemap()
-                .round(false)
-                .size([w, h])
-                .sticky(true)
-                .value(function(d) {
-                    return d.watchers_count;
-                });
-
-            svg = d3.select(treemapId).append("div")
+            chart = d3.select(treemapId).append("div")
                 .attr("class", "chart")
                 .style("width", w + "px")
                 .style("height", h + "px")
-                .append("svg:svg")
+                
+            svg = chart
+                .append("svg")
                 .attr("width", w)
                 .attr("height", h)
-                .append("svg:g")
+                .append("g")
                 .attr("transform", "translate(.5,.5)");
         },
 
@@ -47,8 +42,23 @@ var Treemap = (function() {
     }
 
     function showChart(data) {
-        node = root = [];
         node = root = Utils.getTreeData(data);
+
+        // svg.remove();
+        // svg = chart
+        //     .append("svg")
+        //     .attr("width", w)
+        //     .attr("height", h)
+        //     .append("g")
+        //     .attr("transform", "translate(.5,.5)");
+
+        treemap = d3.layout.treemap()
+            .round(false)
+            .size([w, h])
+            .sticky(true)
+            .value(function(d) {
+                return d.watchers_count;
+            });
 
         var nodes = treemap.nodes(root)
             .filter(function(d) {
@@ -57,7 +67,8 @@ var Treemap = (function() {
 
         var cell = svg.selectAll("g")
             .data(nodes)
-            .enter().append("svg:g")
+            .enter()
+            .append("g")
             .attr("class", "cell")
             .attr("transform", function(d) {
                 return "translate(" + d.x + "," + d.y + ")";
@@ -66,7 +77,7 @@ var Treemap = (function() {
                 return zoom(node == d.parent ? root : d.parent);
             });
 
-        cell.append("svg:rect")
+        cell.append("rect")
             .attr("width", function(d) {
                 return d.dx - 1;
             })
@@ -77,9 +88,9 @@ var Treemap = (function() {
                 return color(d.parent.name);
             });
 
-        cell.append("svg:text")
+        cell.append("text")
             .attr("x", function(d) {
-                return d.dx / 2;
+                return 2 * d.dx / 3 + 20;
             })
             .attr("y", function(d) {
                 return d.dy / 2;
@@ -87,28 +98,38 @@ var Treemap = (function() {
             .attr("dy", ".35em")
             .attr("text-anchor", "middle")
             .text(function(d) {
-                return d.name + " " + d.watchers_count;
+                return d.name;
             })
             .style("opacity", function(d) {
                 d.w = this.getComputedTextLength();
-                return d.dx > d.w ? 1 : 0;
+                return 1;
+                // return d.dx > d.w ? 1 : 0;
             });
+
+        svg.selectAll("g")
+            .data(nodes)
+            .exit()
+            .transition()
+            .style({
+                opacity: 0
+            })
+            .remove();
 
         d3.select(window).on("click", function() {
             zoom(root);
         });
 
         d3.select("#treemapSelect").on("change", function() {
-            treemap.value(this.value == "watchers" ? size : count).nodes(root);
+            treemap.value(this.value == "watchers" ? watchersCount : forksCount).nodes(root);
             zoom(node);
         });
     }
 
-    function size(d) {
+    function watchersCount(d) {
         return d.watchers_count;
     }
 
-    function count(d) {
+    function forksCount(d) {
         return d.forks_count;
     }
 
@@ -134,13 +155,14 @@ var Treemap = (function() {
 
         t.select("text")
             .attr("x", function(d) {
-                return kx * d.dx / 2;
+                return 2 * kx * d.dx / 3 + 20;
             })
             .attr("y", function(d) {
                 return ky * d.dy / 2;
             })
             .style("opacity", function(d) {
-                return kx * d.dx > d.w ? 1 : 0;
+                return 1;
+                // return kx * d.dx > d.w ? 1 : 0;
             });
 
         node = d;

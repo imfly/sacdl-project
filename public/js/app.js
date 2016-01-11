@@ -37,7 +37,8 @@
                 loading.style.display = "none";
                 alert("加载数据失败，请检查您的网络设置。")
             };
-            Utils.init(data);
+            
+            Utils.getData(data);
 
             Bar.show();
             Treemap.show();
@@ -47,9 +48,9 @@
         });
     }
 
-    // Searcher.addListener(function(url) {
-    //     show(url);
-    // })
+    Searcher.addListener(function(url) {
+        show(url);
+    })
 
-    show('https://api.github.com/search/repositories?q=bitcoin');
+    show('https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc');
 })()

@@ -1,11 +1,12 @@
 var Utils = (function() {
-    var dataSet,
-        items = [];
+    var dataSet, treeData;
 
     return {
-
-        init: function(data) {
+        getData: function(data) {
+            console.log("dataSet1= ", dataSet);
             dataSet = data;
+            treeData = dataToJson();
+            console.log("treeData= ", treeData);
         },
 
         /**
@@ -22,7 +23,6 @@ var Utils = (function() {
         }
         */
         getBarData: function() {
-            var treeData = this.getTreeData(); //or dataSet
             var items = treeData.children;
             var result = {
                     labels: [],
@@ -43,6 +43,36 @@ var Utils = (function() {
             return result;
         },
 
+        /**
+                 [
+                 { name: "repos" , 
+                   languages: [  { language: 'js', count: 3000 },
+                             { language: 'ruby', count: 1300 }]
+                ];
+                 */
+        getStackData: function() {
+            var items = treeData.children;
+
+            var result = {
+                name: "repos",
+                languages: []
+            }
+
+            //1. 确定初始数据
+            items.forEach(function(item) {
+                if (item.name === "null") {
+                    return
+                };
+                var child = {
+                    language: item.name,
+                    count: item.children.length
+                };
+
+                result.languages.push(child);
+            })
+
+            return [result];
+        },
         /** Data format:
             {
                     "name": "languages",
@@ -51,58 +81,70 @@ var Utils = (function() {
                         "children": [{
                             "name": "imfly/myIDE",
                             "watchers_count": 100,
-                            "forks_count": 50 "size": 20
+                            "forks_count": 50,
+                            "size": 20
                         }]
                     }]
             }
            */
-
         getTreeData: function() {
-            var languages = {};
-
-            mergeTo(dataSet, {
-                "name": "languages",
-                "children": []
-            });
-
-            if (dataSet && dataSet.items) {
-                items = dataSet.items;
-
-                items.forEach(function(item, index) {
-                    if (typeof languages[item.language] === "undefined") {
-                        languages[item.language] = index;
-                    };
-                })
-
-                for (var language in languages) {
-                    var root = {
-                        "name": language,
-                        "children": []
-                    };
-
-                    items.forEach(function(item, index) {
-                        var child = {
-                            "name": item.full_name,
-                            "watchers_count": item.watchers_count,
-                            "forks_count": item.forks_count,
-                            "size": 0
-                        };
-
-                        if (item.language === language) {
-                            root.children.push(child);
-                        };
-                    })
-
-                    dataSet.children.push(root);
-                }
-            }
-
-            delete dataSet.items;
-            return dataSet;
+            return treeData;
         }
     }
 
-    //provite methods
+   //provite methods
+    function dataToJson() {
+        var languages = {};
+
+        var result = {
+            "name": "languages",
+            "children": []
+        }
+
+        if (dataSet && dataSet.items) {
+            var items = dataSet.items;
+
+            items.forEach(function(item, index) {
+                if (typeof languages[item.language] === "undefined") {
+                    languages[item.language] = index;
+                };
+            })
+
+            for (var language in languages) {
+                if (language === "null") {
+                    language = "others";
+                };
+
+                var root = {
+                    "name": language,
+                    "children": []
+                };
+
+                items.forEach(function(item, index) {
+                    var child = {
+                        "name": item.full_name,
+                        "watchers_count": item.watchers_count,
+                        "forks_count": item.forks_count
+                    };
+
+                    if (item.language === "null") {
+                        language = "null";
+                    };
+
+                    if (item.language === language || (item.language === "null" && language === "others")) {
+                        root.children.push(child);
+                    };
+
+                })
+
+                result.children.push(root);
+            }
+        }
+
+        // delete dataSet.items;
+        return result;
+    }
+ 
     function mergeTo(to, from) {
         for (var key in from) {
             if (typeof to[key] === "undefined") {

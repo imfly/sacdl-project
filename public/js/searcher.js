@@ -5,15 +5,15 @@ var Searcher = (function() {
         searchBtn,
         listeners = [],
         query = {
-            type: 'repositories',
             q: 'bitcoin',
             sort: "stars",
-            order: "desc"
+            order: "desc",
+            per_page: 100
         };
 
     return {
         settings: {
-            baseApiUrl: 'https://api.github.com/search/'
+            baseApiUrl: 'https://api.github.com/search/repositories'
         },
 
         init: function() {
@@ -32,18 +32,22 @@ var Searcher = (function() {
                 })
             })
         },
-        
+
         addListener: function(listener) {
             listeners.push(listener);
         }
     };
 
     function parseQuery() {
-        var q = inputTxt.property('value') || query['q'];
+        query.q = inputTxt.property('value') || 'bitcoin';
+        var arr = [];
 
-        // for (var key in query) {
-        url = baseApiUrl + query['type'] + '?' + 'q=' + q + '&sort=' + query['sort'] + '&order=' + query['order'];
-        // };
+        for (var key in query) {
+            arr.push(key + '=' + query[key]);
+        };
+
+        url = baseApiUrl + '?' + arr.join('&');
+
         console.log(url);
 
         return url;
