@@ -3,10 +3,11 @@ var Searcher = (function() {
         baseApiUrl,
         inputTxt,
         searchBtn,
+        searchMsg,
         listeners = [],
         query = {
             q: 'bitcoin',
-            sort: "stars",
+            sort: "forks",
             order: "desc",
             per_page: 100
         };
@@ -19,6 +20,8 @@ var Searcher = (function() {
         init: function() {
             inputTxt = d3.select('#search-input');
             searchBtn = d3.select('#search-btn');
+            searchMsg = d3.select('#search-msg')
+
             baseApiUrl = this.settings.baseApiUrl;
 
             searchBtn.on('click', function() {
@@ -49,7 +52,7 @@ var Searcher = (function() {
         url = baseApiUrl + '?' + arr.join('&');
 
         console.log(url);
-
+        searchMsg.text('当前搜索地址: ' + url);
         return url;
     }
 }())

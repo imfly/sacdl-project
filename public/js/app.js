@@ -31,13 +31,15 @@
             loading.style.display = "block";
         }, 300);
 
+        url = url || 'https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc&per_page=100';
+
         d3.json(url, function(err, data) {
             if (err) {
                 clearTimeout(loader);
                 loading.style.display = "none";
                 alert("加载数据失败，请检查您的网络设置。")
             };
-            
+
             Utils.getData(data);
 
             Bar.show();
@@ -52,5 +54,5 @@
         show(url);
     })
 
-    show('https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc');
+    show();
 })()

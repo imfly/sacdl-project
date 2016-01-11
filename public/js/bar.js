@@ -26,9 +26,8 @@ var Bar = (function() {
             d3.select("#barTitle").text(this.settings.title);
             d3.select("#barDesc").text(this.settings.desc);
 
-            // Specify the chart area and dimensions
-            chart = d3.select(barId).append("svg:svg")
-                .attr("class", "chart")
+            chart = d3.select(barId).append("svg")
+                .attr("class", "chart");
         },
 
         show: function() {
@@ -45,11 +44,7 @@ var Bar = (function() {
     }
 
     function showBar() {
-        chart.remove();
-        chart = d3.select(barId).append("svg:svg")
-            .attr("class", "chart");
-
-        //clean data;
+        //Clean
         zippedData = [];
 
         data = Utils.getBarData();
@@ -79,8 +74,9 @@ var Bar = (function() {
             .attr("height", chartHeight);
 
         // Get the nodes
-        var barNodes = svg.selectAll("g")
-            .data(zippedData)
+        var barNodes = svg.selectAll("g").data(zippedData, function (d, i) {
+            return [d, i];
+        })
 
         // Create bars
         var bar = barNodes

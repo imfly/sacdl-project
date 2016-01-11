@@ -9,7 +9,7 @@
     <!-- build:css ./css/app.min.css -->
     <link type="text/css" rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" />
-    <link type="text/css" rel="stylesheet" href="css/app.css" />
+    <link type="text/css" rel="stylesheet" href="../public/css/app.css" />
     <!-- /build -->
 </head>
 
@@ -38,14 +38,10 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="input-group  input-group-lg">
-                    <input id="search-input" type="text" class="form-control" placeholder="输入关键字，比如: bitcoin ...">
+                    <input id="search-input" type="text" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">
-                    <button id="search-btn" class="btn btn-default" type="button">搜索!</button>
+                    <button id="search-btn" class="btn btn-default" type="button">Go!</button>
                     </span>
-                </div>
-                <br>
-                <div id="search-msg" class="alert alert-success" role="alert">
-                    当前搜索地址: https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc&per_page=100
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -54,26 +50,15 @@
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h2 id="barTitle">Top100 Bar Chart</h2>
-                <div id="barDesc"></div>
+                <h2 id="testTitle">Top100 Bar Chart</h2>
+                <div id="testDesc"></div>
+                <div id="testId"></div>
                 <br/>
-                <div id="barId"></div>
-                <br/>
-                <h2 id="treemapTitle"></h2>
-                <div id="treemapDesc"></div>
-                <div>
-                    <select id="treemapSelect">
-                        <option value="watchers">Watchers</option>
-                        <option value="forks">Forks</option>
-                    </select>
-                </div>
-                <br/>
-                <div id="sacdlTreemap"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
         <div id="modal" class="overlay">
-            加载中...
+            loading...
         </div>
     </div>
     <footer class="main-footer" role="contentinfo">
@@ -85,11 +70,18 @@
     </footer>
     <!-- build:js ./js/app.min.js -->
     <script type="text/javascript" charset="utf-8" src="../bower_components/d3/d3.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/utils.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/searcher.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/treemap.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/bar.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="test.js"></script>
+    <script type="text/javascript">
+    Test.show();
+
+    var inputTxt = d3.select('#search-input'),
+        searchBtn = d3.select('#search-btn');
+
+    searchBtn.on('click', function() {
+        var dataset = inputTxt.property('value') .split(' ')
+        Test.show(dataset);
+    })
+    </script>
     <!-- /build -->
 </body>
 

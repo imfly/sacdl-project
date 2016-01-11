@@ -3,10 +3,8 @@ var Utils = (function() {
 
     return {
         getData: function(data) {
-            console.log("dataSet1= ", dataSet);
             dataSet = data;
             treeData = dataToJson();
-            console.log("treeData= ", treeData);
         },
 
         /**

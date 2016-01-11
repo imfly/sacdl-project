@@ -27,13 +27,21 @@ var Treemap = (function() {
                 .attr("class", "chart")
                 .style("width", w + "px")
                 .style("height", h + "px")
-                
+
             svg = chart
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h)
                 .append("g")
                 .attr("transform", "translate(.5,.5)");
+
+            treemap = d3.layout.treemap()
+                // .round(false)
+                .size([w, h])
+                // .sticky(false)
+                .value(function(d) {
+                    return d.watchers_count;
+                });
         },
 
         show: function(data) {
@@ -44,29 +52,15 @@ var Treemap = (function() {
     function showChart(data) {
         node = root = Utils.getTreeData(data);
 
-        // svg.remove();
-        // svg = chart
-        //     .append("svg")
-        //     .attr("width", w)
-        //     .attr("height", h)
-        //     .append("g")
-        //     .attr("transform", "translate(.5,.5)");
-
-        treemap = d3.layout.treemap()
-            .round(false)
-            .size([w, h])
-            .sticky(true)
-            .value(function(d) {
-                return d.watchers_count;
-            });
-
         var nodes = treemap.nodes(root)
             .filter(function(d) {
                 return !d.children;
             });
 
         var cell = svg.selectAll("g")
-            .data(nodes)
+            .data(nodes, function(d) {
+                return d.watchers_count;
+            })
             .enter()
             .append("g")
             .attr("class", "cell")
