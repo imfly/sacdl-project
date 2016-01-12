@@ -124,11 +124,12 @@ gulp.task("html",  ['clean'], function() {
         .pipe(gulp.dest(settings.destFolder))
 })
 
+// The default task (called when you run `gulp` from cli)
+gulp.task('default', ['watch', 'js', 'css', 'images', 'fonts', 'html']);
+
+
 //Deploy
-gulp.task('deploy', function() {
+gulp.task('deploy', ['default'], function() {
     return gulp.src('./dist/**/*')
         .pipe(ghPages());
 });
-
-// The default task (called when you run `gulp` from cli)
-gulp.task('default', ['watch', 'js', 'css', 'images', 'fonts', 'html']);
