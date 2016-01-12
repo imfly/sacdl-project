@@ -79,8 +79,7 @@ var Utils = (function() {
                         "children": [{
                             "name": "imfly/myIDE",
                             "watchers_count": 100,
-                            "forks_count": 50,
-                            "size": 20
+                            "forks_count": 50
                         }]
                     }]
             }
@@ -125,21 +124,15 @@ var Utils = (function() {
                         "forks_count": item.forks_count
                     };
 
-                    if (item.language === "null") {
-                        language = "null";
-                    };
-
                     if (item.language === language || (item.language === "null" && language === "others")) {
                         root.children.push(child);
                     };
-
                 })
 
                 result.children.push(root);
             }
         }
 
-        // delete dataSet.items;
         return result;
     }
  
