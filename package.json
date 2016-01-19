@@ -22,7 +22,11 @@
     "url": "https://github.com/imfly/sacdl-project/issues"
   },
   "homepage": "https://github.com/imfly/sacdl-project#readme",
-  "dependencies": {},
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "github": "^0.2.4"
+  },
   "devDependencies": {
     "del": "^2.2.0",
     "event-stream": "^3.3.2",
