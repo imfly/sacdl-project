@@ -31,7 +31,7 @@
             loading.style.display = "block";
         }, 300);
 
-        url = url || 'https://api.github.com/search/repositories?q=bitcoin&sort=forks&order=desc&per_page=100';
+        url = url || 'http://localhost:3000/search';
 
         d3.json(url, function(err, data) {
             if (err) {
