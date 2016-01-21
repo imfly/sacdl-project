@@ -1,6 +1,6 @@
 {
   "name": "sacdl-project",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "加密货币开发语言统计分析, Statistical Analysis of Cryptocurrency Development Languages",
   "main": "index.js",
   "scripts": {

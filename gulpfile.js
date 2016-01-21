@@ -31,15 +31,15 @@ var assets = {
             '**/treemap.js',
             '**/app.js'
         ],
-        vendor: ['bower_components/d3/d3.min.js']
+        vendor: ['public/bower_components/d3/d3.min.js']
     },
 
     css: {
         paths: ['public/css/**/*.css'],
         order: [],
         vendor: [
-            'bower_components/bootstrap/dist/css/bootstrap.min.css',
-            'bower_components/font-awesome/css/font-awesome.min.css'
+            'public/bower_components/bootstrap/dist/css/bootstrap.min.css',
+            'public/bower_components/font-awesome/css/font-awesome.min.css'
         ]
     },
 
@@ -47,7 +47,7 @@ var assets = {
         paths: 'public/images/**/*'
     },
 
-    fonts:  'bower_components/bootstrap/fonts/*.*'
+    fonts:  'public/bower_components/bootstrap/fonts/*.*'
 };
 
 // Not all tasks need to use streams
@@ -119,7 +119,7 @@ gulp.task('watch', function() {
 
 //Html
 gulp.task("html",  ['clean'], function() {
-    gulp.src('./public/index.html')
+    gulp.src('./app/views/index.ejs')
         .pipe(processhtml())
         .pipe(gulp.dest(settings.destFolder))
 })
