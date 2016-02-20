@@ -1,6 +1,6 @@
 # 加密货币开发语言统计分析
 
-这是一个基于gihub的Api，进行二次开发的统计分析工具，Statistical Analysis of Cryptocurrency Development Languages -- SACDL
+这是[《Nodejs开发加密货币》](http://book.btcnodejs.com) 入门部门实例程序。是一个基于gihub的Api进行二次开发的统计分析工具，Statistical Analysis of Cryptocurrency Development Languages -- SACDL
 
 [在线试用](http://imfly.github.io/sacdl-project/)
 
